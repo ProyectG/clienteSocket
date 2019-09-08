@@ -40,6 +40,8 @@ public class Cliente {
 		test.setMensaje("Hola Mundo");
 		test.setNumero(1);
 		
+		
+		
 		mensaje.put("llave", (Object) test);
 		
 		String respuesta = (String) sendObject(mensaje);
