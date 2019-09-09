@@ -30,8 +30,39 @@ public class Cliente {
 		System.out.println("Iniciando cliente");
 		startConnection("127.0.0.1",5555);
 		
-		Map<String,Object> mensaje = new HashMap<String,Object>();
 		
+		ejemploEscribir();
+		ejemploLeer();
+		
+		//Detener coneccion
+		stopConnection();
+	}
+	
+	
+	public static void ejemploEscribir() throws ClassNotFoundException, IOException
+	{
+		Map<String,Object> mensaje = new HashMap<String,Object>();
+		javaSocketObject.File escritura = new javaSocketObject.File();
+		escritura.setContenidoArchivo("Data");
+		escritura.setNombreArchivo("test.txt");
+		escritura.setUbicacionArchivo("/home/nkey/");
+		escritura.setMd5(true);
+		escritura.setTamaño(true);
+		
+		mensaje.put("tarea", "escribir");
+		mensaje.put("plugin", "javaSocketObject.File");
+		mensaje.put("objeto",escritura);
+		
+		javaSocketObject.File respuesta = (javaSocketObject.File) sendObject(mensaje);
+		System.out.println("Contenido Archivo :"+respuesta.getContenidoArchivo());
+		System.out.println("Tamaño :"+respuesta.getResultadoTamaño());
+		System.out.println("MD5 :"+respuesta.getResultadoMD5());
+	}
+	
+	
+	public static void ejemploLeer() throws ClassNotFoundException, IOException
+	{
+		Map<String,Object> mensaje = new HashMap<String,Object>();
 		javaSocketObject.File lectura = new javaSocketObject.File();
 		lectura.setNombreArchivo("test.txt");
 		lectura.setUbicacionArchivo("/home/nkey/");
@@ -46,9 +77,6 @@ public class Cliente {
 		System.out.println("Contenido Archivo :"+respuesta.getContenidoArchivo());
 		System.out.println("Tamaño :"+respuesta.getResultadoTamaño());
 		System.out.println("MD5 :"+respuesta.getResultadoMD5());
-		
-		//Detener coneccion
-		stopConnection();
 	}
 	 
 	    public static void startConnection(String ip, int port) throws IOException {
@@ -77,5 +105,5 @@ public class Cliente {
 	        salida.close();
 	        clientSocket.close();
 	    }
-
+	    
 }
