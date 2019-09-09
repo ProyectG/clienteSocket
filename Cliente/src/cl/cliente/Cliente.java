@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
+import javaSocketObject.File;
 import javaSocketObject.Test;
 
 
@@ -29,42 +30,40 @@ public class Cliente {
 		System.out.println("Iniciando cliente");
 		startConnection("127.0.0.1",5555);
 		
-		String archivo = "<xml>"
-				+ "<data>Esto es un archivo</data>"
-				+ "<nombre>esto es posibilemente una idea</nombre>"
-				+ "</xml>";
-		
 		Map<String,Object> mensaje = new HashMap<String,Object>();
 		
-		Test test = new Test();
-		test.setMensaje("Hola Mundo");
-		test.setNumero(1);
+		javaSocketObject.File lectura = new javaSocketObject.File();
+		lectura.setNombreArchivo("test.txt");
+		lectura.setUbicacionArchivo("/home/nkey/");
+		lectura.setMd5(true);
+		lectura.setTamaño(true);
 		
+		mensaje.put("tarea", "leer");
+		mensaje.put("plugin", "javaSocketObject.File");
+		mensaje.put("objeto",lectura);
 		
+		javaSocketObject.File respuesta = (javaSocketObject.File) sendObject(mensaje);
+		System.out.println("Contenido Archivo :"+respuesta.getContenidoArchivo());
+		System.out.println("Tamaño :"+respuesta.getResultadoTamaño());
+		System.out.println("MD5 :"+respuesta.getResultadoMD5());
 		
-		mensaje.put("llave", (Object) test);
-		
-		String respuesta = (String) sendObject(mensaje);
-		System.out.println(respuesta);
-		//System.out.println(sendMessage("file|"+archivo+"|/home/nkey/Documentos/archivodemo.txt"));
+		//Detener coneccion
 		stopConnection();
 	}
 	 
 	    public static void startConnection(String ip, int port) throws IOException {
 	        clientSocket = new Socket(ip, port);
-	        out = new PrintWriter(clientSocket.getOutputStream(), true);
-	        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 	        envio = clientSocket.getOutputStream();
 	        entrada = clientSocket.getInputStream();
 	        objeto = new ObjectOutputStream(envio);
 	        salida = new ObjectInputStream(entrada);
 	    }
 	 
-	    public static String sendObject(Object obj) throws IOException, ClassNotFoundException
+	    public static Object sendObject(Object obj) throws IOException, ClassNotFoundException
 	    {
 	    	objeto.writeObject(obj);
-	    	Test resp = (Test) salida.readObject();
-	    	return resp.getMensaje();
+	    	Object resp = salida.readObject();
+	    	return resp;
 	    }
 	    
 	    public static String sendMessage(String msg) throws IOException {
@@ -74,8 +73,8 @@ public class Cliente {
 	    }
 	 
 	    public static void stopConnection() throws IOException {
-	        in.close();
-	        out.close();
+	        objeto.close();
+	        salida.close();
 	        clientSocket.close();
 	    }
 
