@@ -30,11 +30,9 @@ public class Cliente {
 		System.out.println("Iniciando cliente");
 		startConnection("127.0.0.1",5555);
 		
-		
 		ejemploEscribir();
 		ejemploLeer();
-		
-		//Detener coneccion
+	
 		stopConnection();
 	}
 	
@@ -57,6 +55,22 @@ public class Cliente {
 		System.out.println("Contenido Archivo :"+respuesta.getContenidoArchivo());
 		System.out.println("Tamaño :"+respuesta.getResultadoTamaño());
 		System.out.println("MD5 :"+respuesta.getResultadoMD5());
+	}
+	
+	
+	public static void ejemploCmd() throws ClassNotFoundException, IOException
+	{
+		Map<String,Object> mensaje = new HashMap<String,Object>();
+		mensaje.put("tarea","ejecutar");
+		String[] comandos = {"cd /home/nkey","ls -ltr"};
+		mensaje.put("comando",comandos);
+		
+		mensaje = (Map<String,Object>) sendObject(mensaje);
+		
+		if((String)mensaje.get("resultado") != null)
+			System.out.println("Resultado CMD : ["+(String)mensaje.get("resultado")+"]");
+		else
+			System.out.println("No hay resultado");
 	}
 	
 	
