@@ -43,7 +43,7 @@ public class Cliente {
 		javaSocketObject.File escritura = new javaSocketObject.File();
 		escritura.setContenidoArchivo("Data");
 		escritura.setNombreArchivo("test.txt");
-		escritura.setUbicacionArchivo("/home/nkey/");
+		escritura.setUbicacionArchivo("/home/marco/");
 		escritura.setMd5(true);
 		escritura.setTamaño(true);
 		
@@ -79,7 +79,7 @@ public class Cliente {
 		Map<String,Object> mensaje = new HashMap<String,Object>();
 		javaSocketObject.File lectura = new javaSocketObject.File();
 		lectura.setNombreArchivo("test.txt");
-		lectura.setUbicacionArchivo("/home/nkey/");
+		lectura.setUbicacionArchivo("/home/marco/");
 		lectura.setMd5(true);
 		lectura.setTamaño(true);
 		
