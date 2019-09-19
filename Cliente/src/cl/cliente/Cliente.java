@@ -13,11 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javaSocketObject.File;
-import javaSocketObject.Test;
+//import javaSocketObject.Test;
 
 
 public class Cliente {
 
+		private static String ip;
+		private static String puerto;
 	 	private static Socket clientSocket;
 	    private static PrintWriter out;
 	    private static BufferedReader in;
@@ -27,8 +29,24 @@ public class Cliente {
 	    private static InputStream entrada;
 	    
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
+		
+		if(args.length > 0)
+		{
+			for(String argumentos:args)
+			{
+				
+				ip=args[0];
+				puerto=args[1];
+			}
+		}else
+		{
+			System.out.println("Se asignan IP-Puerto por defecto.");
+			ip="127.0.0.1";
+			puerto="5555";
+		}
+		
 		System.out.println("Iniciando cliente");
-		startConnection("127.0.0.1",5555);
+		startConnection(ip,Integer.parseInt(puerto));
 		
 		ejemploEscribir();
 		ejemploLeer();
